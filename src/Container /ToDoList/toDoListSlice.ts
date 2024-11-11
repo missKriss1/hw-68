@@ -29,7 +29,7 @@ export const fetchTodoList = createAsyncThunk('toDoList/fetchTodoList', async ()
       ...todolist[todolistId],
       id: todolistId,
     }));
-    todolistInFormat.reverse()
+    todolistInFormat.reverse();
     return todolistInFormat;
   }
   return [];
@@ -43,13 +43,13 @@ export const fetchToDoListPost = createAsyncThunk('toDoList/fetchToDoListPost', 
 export const fetchTodoListPutByChek = createAsyncThunk <void, {id: string}, {state: RootState}>('toDoList/fetchTodoListPutByChek', async ({id}, thunkAPI) =>{
   const task = thunkAPI.getState().toDoList.todolist.find((task:ToDoList) => task.id === id);
   if(task){
-    await axiosApi.put(`toDoList/${id}.json`, {... task, status: !task.status})
+    await axiosApi.put(`toDoList/${id}.json`, {... task, status: !task.status});
   }
 });
 
 export const fetchToDoListDelete = createAsyncThunk<string, string>(`toDoList/fetchToDoListDelete`, async (id) => {
-  await axiosApi.delete(`toDoList/${id}.json`)
-  return id
+  await axiosApi.delete(`toDoList/${id}.json`);
+  return id;
 });
 
 export const toDoListSlice = createSlice({
@@ -81,6 +81,31 @@ export const toDoListSlice = createSlice({
 
       })
       .addCase(fetchToDoListPost.rejected, (state) =>{
+        state.loading = false;
+        state.error = true;
+      })
+      .addCase(fetchTodoListPutByChek.pending, (state) =>{
+        state.loading = true;
+        state.error = false;
+      })
+      .addCase(fetchTodoListPutByChek.fulfilled, (state) =>{
+        state.loading = false;
+
+      })
+      .addCase(fetchTodoListPutByChek.rejected, (state) =>{
+        state.loading = false;
+        state.error = true;
+      })
+      .addCase(fetchToDoListDelete.pending, (state) =>{
+        state.loading = true;
+        state.error = false;
+      })
+      .addCase(fetchToDoListDelete.fulfilled, (state, action) =>{
+        state.loading = false;
+        state.todolist.filter((task) => task.id !== action.payload);
+
+      })
+      .addCase(fetchToDoListDelete.rejected, (state) =>{
         state.loading = false;
         state.error = true;
       })

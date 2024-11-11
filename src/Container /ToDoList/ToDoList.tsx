@@ -17,22 +17,22 @@ const ToDoList = () => {
   const addToDoList =  async (e: React.FormEvent) =>{
     e.preventDefault();
     if (newMessage.trim().length !== 0){
-      await dispatch(fetchToDoListPost(newMessage))
-      await dispatch(fetchTodoList())
+      await dispatch(fetchToDoListPost(newMessage));
+      await dispatch(fetchTodoList());
       setNewMessage('');
     }else{
-      alert('Enter the task!')
+      alert('Enter the task!');
     }
   }
 
   const deleteToDoList = async (id: string) => {
-    await dispatch(fetchToDoListDelete(id))
-    await dispatch(fetchTodoList())
+    await dispatch(fetchToDoListDelete(id));
+    await dispatch(fetchTodoList());
   }
 
   const chekToDoList = async (id: string) => {
-    await dispatch(fetchTodoListPutByChek({id}))
-    await dispatch(fetchTodoList())
+    await dispatch(fetchTodoListPutByChek({id}));
+    await dispatch(fetchTodoList());
 
   }
 
