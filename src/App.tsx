@@ -1,9 +1,9 @@
-import ToDoList from './Container /ToDoList/ToDoList.tsx';
+import ToDoList from "./Container /ToDoList/ToDoList.tsx";
 
 const App = () => {
   return (
     <>
-      <ToDoList/>
+      <ToDoList />
     </>
   );
 };
